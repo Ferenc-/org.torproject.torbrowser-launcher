@@ -159,6 +159,26 @@ modules:
           name: distro
           packagetype: bdist_wheel
 
+  - name: python3-gpgme
+    buildsystem: simple
+    build-options:
+      cflags: -Wno-implicit-function-declaration -Wno-int-conversion
+      env:
+        - PYTHON=/usr/bin/python
+    build-commands:
+      - autoreconf -fiv
+      - ./configure
+      - mv src gpg
+      - pip3 install --no-build-isolation --exists-action=i --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} .
+    sources:
+      - type: git
+        url: https://github.com/gpg/gpgmepy.git
+        tag: gpgmepy-2.0.0
+        commit: 22e1cd5fdea1f62690fba55cf616bde97c1ac5d3
+      - type: patch
+        paths:
+        - gpgmepy-python-3.13.patch
+
   - name: torbrowser-launcher
     buildsystem: simple
     sources:

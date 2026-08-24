@@ -1,0 +1,71 @@
+diff --git a/gpgme.i b/gpgme.i
+index 2b4a0c0..63c6bb9 100644
+--- a/gpgme.i
++++ b/gpgme.i
+@@ -94,8 +94,6 @@
+             }
+           $1[i] = PyBytes_AsString(pyVector[i]);
+         }
+-      else if (PyString_Check(o))
+-	$1[i] = PyString_AsString(o);
+       else {
+ 	PyErr_Format(PyExc_TypeError,
+                      "arg %d: list must contain only str or bytes, got %s "
+@@ -315,7 +313,7 @@
+ %typemap(in) ssize_t, gpgme_error_t, gpgme_err_code_t, gpgme_err_source_t, gpg_error_t {
+   if (PyLong_Check($input))
+     $1 = PyLong_AsLong($input);
+-#if PY_MAJOR_VERSION < 3
++#if 0
+   else if (PyInt_Check($input))
+     $1 = PyInt_AsLong($input);
+ #endif
+@@ -340,7 +338,7 @@
+ #else
+     $1 = PyLong_AsLong($input);
+ #endif
+-#if PY_MAJOR_VERSION < 3
++#if 0
+   else if (PyInt_Check($input))
+     $1 = PyInt_AsLong($input);
+ #endif
+@@ -356,7 +354,7 @@
+     long tmp$argnum;
+     if (PyLong_Check($input))
+       tmp$argnum = PyLong_AsLong($input);
+-#if PY_MAJOR_VERSION < 3
++#if 0
+     else if (PyInt_Check($input))
+       tmp$argnum = PyInt_AsLong($input);
+ #endif
+diff --git a/helpers.c b/helpers.c
+index 0872232..0812a74 100644
+--- a/helpers.c
++++ b/helpers.c
+@@ -116,7 +116,7 @@ static void _gpg_stash_callback_exception(PyObject *weak_self)
+     PyTuple_SetItem(excinfo, 2, Py_None);
+   }
+ 
+-#if PY_VERSION_HEX >= 0x030d0000
++#if 1
+   PyWeakref_GetRef(weak_self, &self);
+   Py_DECREF(self);
+ #else
+@@ -897,7 +897,7 @@ static ssize_t pyDataWriteCb(void *hook, const void *buffer, size_t size)
+     goto leave;
+   }
+ 
+-#if PY_MAJOR_VERSION < 3
++#if 0
+   if (PyInt_Check(retval))
+     result = PyInt_AsSsize_t(retval);
+   else
+@@ -964,7 +964,7 @@ static off_t pyDataSeekCb(void *hook, off_t offset, int whence)
+     goto leave;
+   }
+ 
+-#if PY_MAJOR_VERSION < 3
++#if 0
+   if (PyInt_Check(retval))
+     result = PyInt_AsLong(retval);
+   else
