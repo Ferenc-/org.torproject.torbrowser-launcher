@@ -159,7 +159,7 @@ modules:
           name: distro
           packagetype: bdist_wheel
 
-  - name: python3-gpgme
+  - name: python3-gpg
     buildsystem: simple
     build-options:
       cflags: -Wno-implicit-function-declaration -Wno-int-conversion
