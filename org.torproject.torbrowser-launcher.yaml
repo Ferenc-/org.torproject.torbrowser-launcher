@@ -163,8 +163,6 @@ modules:
     buildsystem: simple
     build-options:
       cflags: -Wno-implicit-function-declaration -Wno-int-conversion
-      env:
-        - PYTHON=/usr/bin/python
     build-commands:
       - autoreconf -fiv
       - ./configure
